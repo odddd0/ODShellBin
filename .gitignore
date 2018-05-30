@@ -1,3 +1,5 @@
 .DS_Store
+*.swp
 etc/fad.conf
 etc/tk.conf
+bin/.tkof.tmp
