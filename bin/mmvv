@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Sequence Rename Script.
+# $1: Shortest number length.
+# $2: Start number.
+# $3: Base NAME.
+
+# work path
+cd ~/Downloads/_/
+workpath=`pwd`
+
+IFS=$'\n'
+
+if [ "$1" == "" -o "$2" == "" -o "$3" == "" ] ; then
+	echo 'Sequence Rename Script.'
+	echo '$1: Shortest number length.'
+	echo '$2: Start number.'
+	echo '$3: Base NAME.'
+else
+	num=$2
+	for cur in $workpath/*
+	do
+		# get file suffix
+		suffix=${cur##*.}
+		if [ "$suffix" == "$cur" ] ; then
+			suffix=""
+		else
+			suffix="."${suffix}
+		fi
+
+		# produce number length
+		while [ ${#num} -lt "$1" ] ; do
+			num="0"${num}
+		done
+
+		filename=$3${num}${suffix}
+
+		mv -i $cur ${workpath}/${filename}
+
+		echo $cur
+		echo $filename
+		num=`expr $num + 1`
+	done
+fi
