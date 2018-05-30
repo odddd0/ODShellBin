@@ -6,16 +6,22 @@
 defaultPwd=hello
 defaultKey=CC5339E4BFFDA4FF3A5395647BE2124E
 confPath=${0%\/*}/../etc/tk.conf
-tmpKeyPath=${0%\/*}/${0##*\/}.tmp
+tmpKeyPath=${0%\/*}/.${0##*\/}.tmp
+suffix=out
 
 takeOff() {
 	if [ "$1" != "" -a "$2" != "" -a "${1:0:1}" != "-" ] ; then
-		fileGeneral=`hexdump -n 8 -e '16/1 "%02X" ' $1`
-		fileGeneral=`echo $fileGeneral`
+		if [ ! -d "$1" ] ; then
+			fileGeneral=`hexdump -n 8 -e '16/1 "%02X" ' $1`
+			fileGeneral=`echo $fileGeneral`
+			outFilename=${1}.${suffix}
+		else
+			outFilename=${1%\/}.${suffix}
+		fi
 		if [ "$fileGeneral" == "53616C7465645F5F" ] ; then
 			dd if="$1" | openssl des3 -d -k "$2" | tar -xf -
 		else
-			tar -cf - "$1" | openssl des3 -salt -k "$2" | dd of="$1.out"
+			tar -cf - "$1" | openssl des3 -salt -k "$2" | dd of="$outFilename"
 		fi
 	fi
 }
@@ -47,6 +53,76 @@ getKey() {
 	fi
 }
 
+cdWorkPath() {
+	if [ -f "$confPath" ] ; then
+		workpath=`sed '/^workPath=/!d;s/workPath=//' $confPath`
+		tmpPath=${workpath#*\~\/}
+		if [ "$tmpPath" == "$workpath" ] ; then
+			cd $tmpPath
+		else
+			cd ~
+			cd ./${tmpPath}
+		fi
+		echo `pwd`
+	fi
+}
+
+groupIn() {
+	workpath=`cdWorkPath`
+	list=$1
+    for cur in $list
+    do
+        tmpPath=${workpath}/${cur}
+        tmpPath=${tmpPath%\/*}
+        cd $tmpPath
+        echo $cur
+        if [ ! -f "${workpath}/${cur}.${suffix}" ] ; then
+            takeOff ${cur##*\/} `getKey`
+            if [ -f "${workpath}/${cur}.${suffix}" ] ; then
+                rm -rf ${cur##*\/}
+            fi
+        fi
+        echo --------------------
+    done
+}
+
+groupOff() {
+	workpath=`cdWorkPath`
+	list=$1
+    for cur in $list
+    do
+        tmpPath=${workpath}/${cur}
+        tmpPath=${tmpPath%\/*}
+        cd $tmpPath
+        echo $cur
+        if [ ! -d "${workpath}/${cur}" ] ; then
+            takeOff ${cur##*\/}.${suffix} `getKey`
+            if [ -d "${workpath}/${cur}" ] ; then
+                rm -rf ${cur##*\/}.${suffix}
+            fi
+        fi
+        echo --------------------
+    done
+}
+
+groupTest() {
+	workpath=`cdWorkPath`
+	list=$1
+    echo ori    out name
+    for cur in $list
+    do
+        oriDir="."
+        outFile="."
+        if [ -d "${workpath}/${cur}" ] ; then
+            oriDir="o"
+        fi
+        if [ -f "${workpath}/${cur}.${suffix}" ] ; then
+            outFile="o"
+        fi
+        echo "$oriDir    $outFile   $cur"
+    done
+}
+
 if [ -f "$1" -o -d "$1" ] ; then
 	if [ "$2" == "" ] ; then
 		key=`getKey`
@@ -57,6 +133,21 @@ if [ -f "$1" -o -d "$1" ] ; then
 elif [ "$1" == "-s" ] ; then
 	rm -rf $tmpKeyPath
 	echo clear temp file.
+elif [ "$1" == "-t" -a -f "$confPath" ] ; then
+	list=`sed '/^all=/!d;s/all=//' $confPath`
+	groupTest "$list"
+elif [ "$1" == "-i" -a -f "$confPath" ] ; then
+    list=`sed '/^all=/!d;s/all=//' $confPath`
+	if [ "$2" != "" ] ; then
+		list=`sed '/^'$2'=/!d;s/'$2'=//' $confPath`
+	fi
+	groupIn "$list"
+elif [ "$1" == "-o" -a -f "$confPath" ] ; then
+    list=`sed '/^all=/!d;s/all=//' $confPath`
+	if [ "$2" != "" ] ; then
+        list=`sed '/^'$2'=/!d;s/'$2'=//' $confPath`
+    fi
+	groupOff "$list"
 else
 	echo 'tkof: illegal option or file name.'
 	echo 'usage:	tkof [filename]'
