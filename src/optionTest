@@ -1,0 +1,105 @@
+
+echo ------a------
+$1 -a $2 2>/dev/null
+echo ------b------
+$1 -b $2 2>/dev/null
+echo ------c------
+$1 -c $2 2>/dev/null
+echo ------d------
+$1 -d $2 2>/dev/null
+echo ------e------
+$1 -e $2 2>/dev/null
+echo ------f------
+$1 -f $2 2>/dev/null
+echo ------g------
+$1 -g $2 2>/dev/null
+echo ------h------
+$1 -h $2 2>/dev/null
+echo ------i------
+$1 -i $2 2>/dev/null
+echo ------j------
+$1 -j $2 2>/dev/null
+echo ------k------
+$1 -k $2 2>/dev/null
+echo ------l------
+$1 -l $2 2>/dev/null
+echo ------m------
+$1 -m $2 2>/dev/null
+echo ------n------
+$1 -n $2 2>/dev/null
+echo ------o------
+$1 -o $2 2>/dev/null
+echo ------p------
+$1 -p $2 2>/dev/null
+echo ------q------
+$1 -q $2 2>/dev/null
+echo ------r------
+$1 -r $2 2>/dev/null
+echo ------s------
+$1 -s $2 2>/dev/null
+echo ------t------
+$1 -t $2 2>/dev/null
+echo ------u------
+$1 -u $2 2>/dev/null
+echo ------v------
+$1 -v $2 2>/dev/null
+echo ------w------
+$1 -w $2 2>/dev/null
+echo ------x------
+$1 -x $2 2>/dev/null
+echo ------y------
+$1 -y $2 2>/dev/null
+echo ------z------
+$1 -z $2 2>/dev/null
+echo ------A------
+$1 -A $2 2>/dev/null
+echo ------B------
+$1 -B $2 2>/dev/null
+echo ------C------
+$1 -C $2 2>/dev/null
+echo ------D------
+$1 -D $2 2>/dev/null
+echo ------E------
+$1 -E $2 2>/dev/null
+echo ------F------
+$1 -F $2 2>/dev/null
+echo ------G------
+$1 -G $2 2>/dev/null
+echo ------H------
+$1 -H $2 2>/dev/null
+echo ------I------
+$1 -I $2 2>/dev/null
+echo ------J------
+$1 -J $2 2>/dev/null
+echo ------K------
+$1 -K $2 2>/dev/null
+echo ------L------
+$1 -L $2 2>/dev/null
+echo ------M------
+$1 -M $2 2>/dev/null
+echo ------N------
+$1 -N $2 2>/dev/null
+echo ------O------
+$1 -O $2 2>/dev/null
+echo ------P------
+$1 -P $2 2>/dev/null
+echo ------Q------
+$1 -Q $2 2>/dev/null
+echo ------R------
+$1 -R $2 2>/dev/null
+echo ------S------
+$1 -S $2 2>/dev/null
+echo ------T------
+$1 -T $2 2>/dev/null
+echo ------U------
+$1 -U $2 2>/dev/null
+echo ------V------
+$1 -V $2 2>/dev/null
+echo ------W------
+$1 -W $2 2>/dev/null
+echo ------X------
+$1 -X $2 2>/dev/null
+echo ------Y------
+$1 -Y $2 2>/dev/null
+echo ------Z------
+$1 -Z $2 2>/dev/null

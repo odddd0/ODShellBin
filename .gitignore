@@ -3,3 +3,5 @@
 etc/fad.conf
 etc/tk.conf
 bin/.tkof.tmp
+*.x
+*.x.c

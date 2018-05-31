@@ -3,9 +3,11 @@
 # Simple Login with SSH.
 # $1: Shortcut.
 
-confPath="../etc/fad.conf"
+cd ~
+homePath=`pwd`
+cd - 1>/dev/null
 
-cd ${0%\/*}
+confPath=$homePath"/etc/fad.conf"
 
 if [ "$1" == "" ] ; then
 	echo 'Simple Login with SSH.'
