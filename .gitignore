@@ -3,3 +3,5 @@
 *.tmp
 *.x
 *.x.c
+bin
+build
