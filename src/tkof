@@ -5,8 +5,11 @@
 
 defaultPwd=hello
 defaultKey=CC5339E4BFFDA4FF3A5395647BE2124E
-confPath=${0%\/*}/../etc/tk.conf
-tmpKeyPath=${0%\/*}/.${0##*\/}.tmp
+cd ~
+homePath=`pwd`
+cd - 1>/dev/null
+confPath=${homePath}/etc/tk.conf
+tmpKeyPath=${homePath}/etc/.tkof.tmp
 suffix=out
 
 takeOff() {
