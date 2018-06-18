@@ -14,6 +14,8 @@ workpath=`pwd`
 
 IFS=$'\n'
 
+appendSuffix=$1
+
 num=0
 for cur in $workpath/*
 do
@@ -39,7 +41,7 @@ do
 		mtimes=`date -r $mtime "+%y%m%d_%H%M%S"`
 	done
 
-	filename=${mtimes}${suffix}
+	filename=${mtimes}${appendSuffix}${suffix}
 	mv -i $cur ${workpath}/${filename}
 
 	echo $cur
