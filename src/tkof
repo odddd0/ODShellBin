@@ -111,6 +111,8 @@ groupOff() {
 groupTest() {
 	workpath=`cdWorkPath`
 	list=$1
+	isConflict="(CONFLICT)"
+	isMiss="(MISS)"
     echo ori    out name
     for cur in $list
     do
@@ -123,7 +125,20 @@ groupTest() {
             outFile="o"
         fi
         echo "$oriDir    $outFile   $cur"
+		if [ "$oriDir" == "$outFile" ] ; then
+			if [ "$oriDir" == "." ] ; then
+				isMiss="${isMiss} $cur"
+			elif [ "$oriDir" == "o" ] ; then
+				isConflict="${isConflict} $cur"
+			fi
+		fi
     done
+	if [ "$isMiss" != "(MISS)" ] ; then
+		echo $isMiss
+	fi
+	if [ "$isConflict" != "(CONFLICT)" ] ; then
+		echo $isConflict
+	fi
 }
 
 if [ -f "$1" -o -d "$1" ] ; then
