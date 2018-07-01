@@ -1,0 +1,19 @@
+#!/bin/bash
+
+IFS=$'\n'
+
+if [ -d "$1" -a -d "$2" ] ; then
+	for cur in $1/*
+	do
+		baseName=`basename $cur` 
+		mkdir $2/$baseName 2>/dev/null
+		for curPng in $cur/*
+		do
+			if [ -f "$curPng" ] ; then
+				mv -i "$curPng" "$2/$baseName/"
+			fi
+		done
+		rm -rf $cur/.DS_Store 2>/dev/null
+		rmdir $cur 2>/dev/null
+	done
+fi
