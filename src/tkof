@@ -161,9 +161,13 @@ elif [ "${1:0:1}" == "-" -a -f "$confPath" ] ; then
 	elif [ "$1" == "-out" ] ; then
 		groupOff "$list" "out"
 	else
-		metaType=${1:1:1}
-		list=`sed '/^'$metaType'=/!d;s/'$metaType'=//' $confPath`
-		groupOff "$list" 
+		typeList=${1:1:${#1}}
+		for i in `seq ${#typeList}`
+		do
+			typeCur=${typeList:$i-1:1}
+			list=`sed '/^'$typeCur'=/!d;s/'$typeCur'=//' $confPath`
+			groupOff "$list"
+		done
 	fi
 else
 	echo 'tkof: illegal option or file name.'
